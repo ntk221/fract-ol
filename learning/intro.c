@@ -1,4 +1,5 @@
 #include <mlx.h>
+#include <math.h>
 
 typedef struct s_data
 {
@@ -17,9 +18,19 @@ void  my_mlx_pixel_put(t_data *data, int x, int y, int color)
   *(unsigned int*)dst = color;
 }
 
-void  call_pixel_put(t_data *data, int x, int y, int color)
+void  call_pixel_put(t_data *data, int x1, int y1)
 {
-  my_mlx_pixel_put(data, x, y, color);
+  int color   = 0x00FF0000;
+  double  rad = (double)30 / 180 * M_PI;
+  int length = 100;
+  int x = 0;
+  int y = 0;
+  for(int l = 0; l < length; l++)
+  {
+    x = x1 + l * cos(rad);
+    y = y1 + l * sin(rad);
+    my_mlx_pixel_put(data, x, y, color);
+  }
 }
 
 int	main(void)
@@ -34,7 +45,7 @@ int	main(void)
   img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
   //for(int i = 0; i < 1080; i++)
   //  my_mlx_pixel_put(&img, 5, i, 0x00FF0000);
-  call_pixel_put(&img, 5, 5, 0x00FF0000);
+  call_pixel_put(&img, 5, 5);
   mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
   mlx_loop(mlx);
 }
