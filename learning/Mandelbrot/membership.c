@@ -1,13 +1,22 @@
 #include <math.h>
+#include <mlx.h>
 #include <stdbool.h>
 #include <assert.h>
 #include <stdio.h>
-#include <string>
-#include <iostream>
+// #include <string>
+// #include <iostream>
 #include "include/complex.h"
 
-using namespace std;
+// using namespace std;
 
+typedef struct s_data
+{
+  void  *img;
+  char  *addr;
+  int    bits_per_pixel;
+  int   line_length;
+  int   endian;
+} t_data;
 
 int    mandelbrot(t_complex c, int maxiter)
 {
@@ -31,31 +40,32 @@ void    test_mandelbrot(void)
     c.re = 0.0;
     c.im = 0.0;
     int res = mandelbrot(c, 40);
-    printf("%d\n", res);
+    // printf("%d\n", res);
 }
 
-/*int main(void)
+void  my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-    test_sum_complex();
-    test_mul_complex();
-    test_abs_complex();
-    test_mandelbrot();
-}*/
+  char  *dst;
+
+  dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+  *(unsigned int*)dst = color;
+}
 
 int main(void)
 {
-    int width = 140;
-    int height = 33;
+    int width = 1080;
+    int height = 1920;
 
+    // 複素平面上の，ウィンドウにマッピングする部分?
     double x_start = -2.0;
-	double x_fin = 1.0;
-	double y_start = -1.0;
-	double y_fin = 1.0;
+	double x_fin = 2.0;
+	double y_start = -2.0;
+	double y_fin = 2.0;
 
-    double dx = (x_fin - x_start)/(width - 1); // 変化率？
-    double dy = (y_fin - y_start)/(height - 1);
+    double dx = (x_fin - x_start)/(width);
+    double dy = (y_fin - y_start)/(height);
 
-    string char_ = "\u2588";
+    /*string char_ = "\u2588";
 
 	string black = "\033[22;30m";
 	string red = "\033[22;31m";
@@ -100,5 +110,32 @@ int main(void)
             cout << "\033[0m";
         }
         cout << endl;
+    }*/
+
+    void    *mlx;
+    void    *mlx_win;
+    t_data  img;
+
+    mlx = mlx_init();
+    mlx_win = mlx_new_window(mlx, width, height, "Hello, Woeld");
+    img.img = mlx_new_image(mlx, width, height);
+    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            t_complex c;
+            c.re = x_start + j * dx; // current real value
+            c.im = y_fin - i * dy; // current imaginary value
+
+            int value = mandelbrot(c, 100);
+            if (value > 90)
+            {
+                my_mlx_pixel_put(&img, j, i, 0x00FF0000);
+                // mlx_pixel_put(mlx, mlx_win, j, i, 0x00FF0000);
+            }
+        }
     }
+    mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+    mlx_loop(mlx);
 }

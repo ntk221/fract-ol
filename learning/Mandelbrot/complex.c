@@ -1,6 +1,7 @@
 #include "include/complex.h"
 #include <math.h>
 
+
 t_complex   c_sum(t_complex c1, t_complex c2)
 {
     t_complex  sum;
