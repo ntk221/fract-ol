@@ -1,36 +1,7 @@
-#include <math.h>
-#include <mlx.h>
-#include <stdbool.h>
-#include <assert.h>
-#include <stdio.h>
-// #include <string>
-// #include <iostream>
-#include "include/complex.h"
-#include <X11/Xlib.h>
-#include <stdlib.h>
+#include "include/fract-ol.h"
+#include "include/utils.h"
 
 // using namespace std;
-
-typedef struct s_data
-{
-  void  *img;
-  char  *addr;
-  int    bits_per_pixel;
-  int   line_length;
-  int   endian;
-} t_data;
-
-typedef struct s_vars
-{
-  void  *mlx;
-  void  *win;
-} t_vars;
-
-void    die(const char *s)
-{
-    perror(s);
-    exit(1);
-}
 
 int close(int keycode, t_vars *vars)
 {
