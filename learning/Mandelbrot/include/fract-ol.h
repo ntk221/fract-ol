@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include "complex.h"
-#include <X11/Xlib.h>
+#include <Xlib.h>
 #include <stdlib.h>
 
 typedef struct s_data

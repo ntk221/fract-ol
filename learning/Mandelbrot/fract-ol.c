@@ -1,11 +1,14 @@
 #include "include/fract-ol.h"
 #include "include/utils.h"
+#include <X11/keysym.h>
 
 // using namespace std;
 
+#include <stdio.h>
 int close(int keycode, t_vars *vars)
 {
-  if(keycode != 34)
+  printf("%d\n", keycode); // esc -> 65307 ...????
+  if(keycode == XK_Escape)
   {
     mlx_destroy_window(vars->mlx, vars->win);
     die("Pessed esc key");

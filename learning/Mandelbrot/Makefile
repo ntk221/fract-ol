@@ -15,6 +15,8 @@ $(NAME):
 fclean:
 	rm $(NAME)
 
+re: fclean $(NAME)
+
 test:
 	gcc test_complex.c complex.c -o complex_test
 	./complex_test
