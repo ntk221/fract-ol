@@ -1,15 +1,15 @@
 CC 	   = gcc
 FLAGS  = -Wall -Werror -Wextra
 
-NAME   = Mandelbrot
-MLXDIR = ../../minilibx-linux
+NAME   = event
+MLXDIR = ../../../minilibx-linux
 XLIB   = /opt/X11/lib
 
 %.o: %.c
 	$(CC) $(FLAGS) -Imlx -c $< -o $@
 
 $(NAME):
-	$(CC)  -L$(MLXDIR) -L$(XLIB) -lXext -lX11 -lmlx -I$(MLXDIR) -framework OpenGL -framework AppKit membership.c complex.c -o $(NAME)
+	$(CC)  -L$(MLXDIR) -L$(XLIB) -lXext -lX11 -lmlx -I$(MLXDIR) -framework OpenGL -framework AppKit events.c -o $(NAME)
 
 
 test:

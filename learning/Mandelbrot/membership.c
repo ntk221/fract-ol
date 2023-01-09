@@ -40,7 +40,6 @@ void    test_mandelbrot(void)
     c.re = 0.0;
     c.im = 0.0;
     int res = mandelbrot(c, 40);
-    // printf("%d\n", res);
 }
 
 void  my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -53,8 +52,8 @@ void  my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int main(void)
 {
-    int width = 1080;
-    int height = 1920;
+    int width = 1920;
+    int height = 1080;
 
     // 複素平面上の，ウィンドウにマッピングする部分?
     double x_start = -2.0;
@@ -126,7 +125,7 @@ int main(void)
         {
             t_complex c;
             c.re = x_start + j * dx; // current real value
-            c.im = y_fin - i * dy; // current imaginary value
+            c.im = y_start + i * dy;   // current imaginary value
 
             int value = mandelbrot(c, 100);
             if (value > 90)
