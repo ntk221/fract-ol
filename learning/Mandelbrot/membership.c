@@ -42,6 +42,13 @@ int close(int keycode, t_vars *vars)
   return (0);
 }
 
+int close_2(t_vars *vars)
+{
+    mlx_destroy_window(vars->mlx, vars->win);
+    die("Pessed X button");
+    return (0);
+}
+
 int    mandelbrot(t_complex c, int maxiter)
 {
     t_complex   z;
@@ -86,7 +93,7 @@ int main(void)
     vars.mlx = mlx_init();
     vars.win = mlx_new_window(vars.mlx, width, height, "Hello, Woeld");
     mlx_hook(vars.win, 2, 1L<<0, close, &vars);
-    mlx_hook(vars.win, 12, 1L<<15, close, &vars);
+    mlx_hook(vars.win, 17, 1L<<2, close_2, &vars);
     img.img = mlx_new_image(vars.mlx, width, height);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
     for (int i = 0; i < height; i++)

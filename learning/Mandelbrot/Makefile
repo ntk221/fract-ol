@@ -12,6 +12,8 @@ XLIBINC = /opt/X11/include/X11
 $(NAME):
 	$(CC)  -L$(MLXDIR) -L$(XLIB) -lXext -lX11 -lmlx -I$(MLXDIR) -I$(XLIBINC) -framework OpenGL -framework AppKit complex.c membership.c -o $(NAME)
 
+fclean:
+	rm $(NAME)
 
 test:
 	gcc test_complex.c complex.c -o complex_test
