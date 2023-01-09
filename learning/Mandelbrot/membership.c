@@ -45,7 +45,7 @@ int close(int keycode, t_vars *vars)
 int close_2(t_vars *vars)
 {
     mlx_destroy_window(vars->mlx, vars->win);
-    die("Pessed X button");
+    die("Pessed cross button");
     return (0);
 }
 
@@ -73,6 +73,16 @@ void  my_mlx_pixel_put(t_data *data, int x, int y, int color)
   *(unsigned int*)dst = color;
 }
 
+void  init(t_vars *vars, t_data *img, int width, int height)
+{
+    vars->mlx = mlx_init();
+    vars->win = mlx_new_window(vars->mlx, width, height, "Hello, World");
+    mlx_hook(vars->win, 2, 1L<<0, close, &(*vars));
+    mlx_hook(vars->win, 17, 1L<<2, close_2, &(*vars));
+    img->img = mlx_new_image(vars->mlx, width, height);
+    img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
+}
+
 int main(void)
 {
     int width = 1920;
@@ -90,12 +100,8 @@ int main(void)
     t_vars  vars;
     t_data  img;
 
-    vars.mlx = mlx_init();
-    vars.win = mlx_new_window(vars.mlx, width, height, "Hello, Woeld");
-    mlx_hook(vars.win, 2, 1L<<0, close, &vars);
-    mlx_hook(vars.win, 17, 1L<<2, close_2, &vars);
-    img.img = mlx_new_image(vars.mlx, width, height);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+    init(&vars, &img, width, height);
+
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
