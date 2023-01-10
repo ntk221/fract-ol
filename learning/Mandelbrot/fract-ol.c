@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fract-ol.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/10 12:22:14 by kazuki            #+#    #+#             */
+/*   Updated: 2023/01/10 12:28:54 by kazuki           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include/fract-ol.h"
 #include "include/utils.h"
 #include <X11/keysym.h>
@@ -57,28 +69,29 @@ void  init(t_vars *vars, t_data *img, int width, int height)
     img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
 }
 
+#define WIDTH  1920
+#define HEIGHT 1080
+
 int main(void)
 {
-    int width = 1920;
-    int height = 1080;
-
     // 複素平面上の，ウィンドウにマッピングする部分?
     double x_start = -2.0;
 	double x_fin = 2.0;
 	double y_start = -2.0;
 	double y_fin = 2.0;
 
-    double dx = (x_fin - x_start)/(width);
-    double dy = (y_fin - y_start)/(height);
+    double dx = (x_fin - x_start)/(WIDTH);
+    double dy = (y_fin - y_start)/(HEIGHT);
 			
-    t_vars  vars;
-    t_data  img;
+    t_vars    vars;
+    t_data    img;
+    t_fractol fractol;
 
-    init(&vars, &img, width, height);
+    init(&vars, &img, WIDTH, HEIGHT);
 
-    for (int i = 0; i < height; i++)
+    for (int i = 0; i < HEIGHT; i++)
     {
-        for (int j = 0; j < width; j++)
+        for (int j = 0; j < WIDTH; j++)
         {
             t_complex c;
             c.re = x_start + j * dx; // current real value
