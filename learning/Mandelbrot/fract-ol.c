@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:22:14 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/10 12:28:54 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/10 12:36:57 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,22 @@ int    mandelbrot(t_complex c, int maxiter)
     return maxiter;
 }
 
-void  my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void  my_mlx_pixel_put(t_fractol *fractol, int x, int y, int color)
 {
   char  *dst;
 
-  dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+  dst = fractol->addr + (y * fractol->line_length + x * (fractol->bits_per_pixel / 8));
   *(unsigned int*)dst = color;
 }
 
-void  init(t_vars *vars, t_data *img, int width, int height)
+void  init(t_fractol *fractol, int width, int height)
 {
-    vars->mlx = mlx_init();
-    vars->win = mlx_new_window(vars->mlx, width, height, "Hello, World");
-    mlx_hook(vars->win, 2, 1L<<0, close, &(*vars));
-    mlx_hook(vars->win, 17, 1L<<2, close_2, &(*vars));
-    img->img = mlx_new_image(vars->mlx, width, height);
-    img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
+    fractol->mlx = mlx_init();
+    fractol->win = mlx_new_window(fractol->mlx, width, height, "Hello, World");
+    mlx_hook(fractol->win, 2, 1L<<0, close, &(*fractol));
+    mlx_hook(fractol->win, 17, 1L<<2, close_2, &(*fractol));
+    fractol->img = mlx_new_image(fractol->mlx, width, height);
+    fractol->addr = mlx_get_data_addr(fractol->img, &fractol->bits_per_pixel, &fractol->line_length, &fractol->endian);
 }
 
 #define WIDTH  1920
@@ -83,11 +83,11 @@ int main(void)
     double dx = (x_fin - x_start)/(WIDTH);
     double dy = (y_fin - y_start)/(HEIGHT);
 			
-    t_vars    vars;
-    t_data    img;
+    // t_vars    vars;
+    // t_data    img;
     t_fractol fractol;
 
-    init(&vars, &img, WIDTH, HEIGHT);
+    init(&fractol, WIDTH, HEIGHT);
 
     for (int i = 0; i < HEIGHT; i++)
     {
@@ -100,11 +100,11 @@ int main(void)
             int value = mandelbrot(c, 100);
             if (value > 90)
             {
-                my_mlx_pixel_put(&img, j, i, 0x00FF0000);
+                my_mlx_pixel_put(&fractol, j, i, 0x00FF0000);
                 // mlx_pixel_put(mlx, mlx_win, j, i, 0x00FF0000);
             }
         }
     }
-    mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-    mlx_loop(vars.mlx);
+    mlx_put_image_to_window(fractol.mlx, fractol.win, fractol.img, 0, 0);
+    mlx_loop(fractol.mlx);
 }
