@@ -7,6 +7,9 @@
 #include <Xlib.h>
 #include <stdlib.h>
 
+#define WIDTH 	1920
+#define HEIGHT 	1080
+
 typedef struct s_data
 {
   void  *img;
@@ -24,11 +27,20 @@ typedef struct s_vars
 
 typedef struct s_fractol
 {
-  void  *img;
-  char  *addr;
-  int    bits_per_pixel;
-  int   line_length;
-  int   endian;
-  void  *mlx;
-  void  *win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+
+	void		*mlx;
+	void		*win;
+
+	double	x_start;
+	double	x_fin;
+	double	y_start;
+	double	y_fin;
+	double	dx; // x_fin - x_start)/(WIDTH);
+	double	dy; // (y_fin - y_start)/(HEIGHT);
+
 } t_fractol;
