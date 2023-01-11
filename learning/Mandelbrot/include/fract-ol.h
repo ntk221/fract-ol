@@ -27,15 +27,6 @@ typedef struct s_vars
 
 typedef struct s_fractol
 {
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-
-	void		*mlx;
-	void		*win;
-
 	double	x_start;
 	double	x_fin;
 	double	y_start;
@@ -44,3 +35,14 @@ typedef struct s_fractol
 	double	dy; // (y_fin - y_start)/(HEIGHT);
 
 } t_fractol;
+
+typedef struct s_mlx_system
+{
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	void		*mlx;
+	void		*win;
+} t_mlx_system;

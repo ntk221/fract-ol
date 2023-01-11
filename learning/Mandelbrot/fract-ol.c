@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:22:14 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/10 22:51:05 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/11 10:23:22 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,21 @@
 #include "include/utils.h"
 #include <X11/keysym.h>
 
-// using namespace std;
-
 #include <stdio.h>
-int close(int keycode, t_fractol *fractol)
+int close(int keycode, t_mlx_system *system)
 {
   printf("%d\n", keycode); // esc -> 65307 ...????
   if(keycode == XK_Escape)
   {
-    mlx_destroy_window(fractol->mlx, fractol->win);
+    mlx_destroy_window(system->mlx, system->win);
     die("Pressed esc key");
   }
   return (0);
 }
 
-int close_2(t_fractol *fractol)
+int close_2(t_mlx_system *system)
 {
-    mlx_destroy_window(fractol->mlx, fractol->win);
+    mlx_destroy_window(system->mlx, system->win);
     die("Pessed cross button");
     return (0);
 }
@@ -51,34 +49,34 @@ int    mandelbrot(t_complex c, int maxiter)
     return maxiter;
 }
 
-void  my_mlx_pixel_put(t_fractol *fractol, int x, int y, int color)
+void  my_mlx_pixel_put(t_mlx_system *system, int x, int y, int color)
 {
   char  *dst;
 
-  dst = fractol->addr + (y * fractol->line_length + x * (fractol->bits_per_pixel / 8));
+  dst = system->addr + (y * system->line_length + x * (system->bits_per_pixel / 8));
   *(unsigned int*)dst = color;
 }
 
-void  system_init(t_fractol *fractol)
+void  init_mlx_system(t_mlx_system *system)
 {
-    fractol->mlx = mlx_init();
-    fractol->win = mlx_new_window(fractol->mlx, WIDTH, HEIGHT, "Hello, World");
-    fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
-    fractol->addr = mlx_get_data_addr(fractol->img, &fractol->bits_per_pixel, &fractol->line_length, &fractol->endian);
+    system->mlx = mlx_init();
+    system->win = mlx_new_window(system->mlx, WIDTH, HEIGHT, "Hello, World");
+    system->img = mlx_new_image(system->mlx, WIDTH, HEIGHT);
+    system->addr = mlx_get_data_addr(system->img, &system->bits_per_pixel, &system->line_length, &system->endian);
 }
 
 
-void    fractol_init(t_fractol *fractol)
+void    init_fractol(t_fractol *fractol)
 {
     fractol->x_start = -2.0;
     fractol->y_start = -2.0;
     fractol->x_fin = 2.0;
     fractol->y_fin = 2.0;
-    double	dx =(fractol->x_fin - fractol->x_start)/(WIDTH);
-	double	dy= (fractol->y_fin - fractol->y_start)/(HEIGHT);
+    double	dx = (fractol->x_fin - fractol->x_start)/(WIDTH);
+	double	dy = (fractol->y_fin - fractol->y_start)/(HEIGHT);
 }
 
-void    render_fractol(t_fractol *fractol)
+void    render_fractol(t_fractol *fractol, t_mlx_system *system)
 {
     fractol->dx = (fractol->x_fin - fractol->x_start)/(WIDTH);
     fractol->dy = (fractol->y_fin - fractol->y_start)/(HEIGHT);
@@ -88,40 +86,39 @@ void    render_fractol(t_fractol *fractol)
         for (int j = 0; j < WIDTH; j++)
         {
             t_complex c;
-            c.re = fractol->x_start + j * fractol->dx; // current real value
+            c.re = fractol->x_start + j * fractol->dx;   // current real value
             c.im = fractol->y_start + i * fractol->dy;   // current imaginary value
 
             int value = mandelbrot(c, 100);
             if (value > 90)
-            {
-                my_mlx_pixel_put(fractol, j, i, 0x00FF0000);
-            }
+                my_mlx_pixel_put(system, j, i, 0x00FF0000);
         }
     }
-    mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
+    mlx_put_image_to_window(system->mlx, system->win, system->img, 0, 0); 
 }
 
 int main(int argc, char **argv)
 {
-    t_fractol fractol;
+    t_fractol       fractol;
+    t_mlx_system    system;
     
-    // TODO: fractol に関する init
-    fractol_init(&fractol);
+    // フラクタル図形 に関する情報を保存する構造体の初期化
+    init_fractol(&fractol);
 
-    // mlx系に関する init
-    system_init(&fractol);
+    // mlx系 に関する情報を保存する構造体の初期化
+    init_mlx_system(&system);
 
     //  TODO: 関数に切る
-        mlx_hook(fractol.win, 2, 1L<<0, close, &fractol);
-        mlx_hook(fractol.win, 17, 1L<<2, close_2, &fractol);
+        mlx_hook(system.win, 2, 1L<<0, close, &system);
+        mlx_hook(system.win, 17, 1L<<2, close_2, &system);
     //
 
     //  TODO: mouse系のhooksの設定
 
     //
 
-    // TODO: 描画用の関数として切り出す
-    render_fractol(&fractol);
+    // フラクタル図形の描画処理
+    render_fractol(&fractol, &system);
     //
-    mlx_loop(fractol.mlx);
+    mlx_loop(system.mlx);
 }
