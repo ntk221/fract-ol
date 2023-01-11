@@ -101,14 +101,46 @@ void    render_fractol(t_fractol *fractol)
     mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
 }
 
+int  update(void *param)
+{
+  t_fractol *fractol = (t_fractol*)param;
+
+  static int  frame;
+
+  frame++;
+  if (frame == 2)
+  {
+      fractol->x_start += 1;
+      fractol->x_fin += 1;
+  }
+  else if (frame >= 4)
+  {
+      fractol->x_start +=1;
+      fractol->x_fin += 1;
+      frame = 0;
+  }
+  render_fractol(fractol);
+
+  return (0);
+}
+
+int mouse_hook(int mousecode, t_fractol *fractol)
+{
+  if (mousecode == 4)
+    puts("scroll up!");
+  else if(mousecode == 5)
+    puts("scroll down!");
+  return 0;
+}
+
 int main(int argc, char **argv)
 {
     t_fractol fractol;
     
-    // TODO: fractol に関する init
+    // フラクタル図形に関する初期化
     fractol_init(&fractol);
 
-    // mlx系に関する init
+    // mlx系に関する初期化
     system_init(&fractol);
 
     //  TODO: 関数に切る
@@ -117,11 +149,15 @@ int main(int argc, char **argv)
     //
 
     //  TODO: mouse系のhooksの設定
-
+        mlx_mouse_hook(fractol.win, mouse_hook, &fractol);
     //
 
-    // TODO: 描画用の関数として切り出す
+    // 描画用の処理
     render_fractol(&fractol);
+
     //
+    // mlx_loop_hook(fractol.mlx, *update, &fractol);
+    //
+
     mlx_loop(fractol.mlx);
 }
