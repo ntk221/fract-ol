@@ -34,6 +34,8 @@ typedef struct s_fractol
 	double	y_fin;
 	double	dx; // x_fin - x_start)/(WIDTH);
 	double	dy; // (y_fin - y_start)/(HEIGHT);
+              //
+  int     *hoge;
 
 	void		*img;
 	char		*addr;

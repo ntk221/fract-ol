@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:22:14 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/12 23:03:35 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/13 00:13:08 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // using namespace std;
 
 #include <stdio.h>
-int close(int keycode, t_fractol *fractol)
+int key_hooks(int keycode, t_fractol *fractol)
 {
   printf("%d\n", keycode); // esc -> 65307 ...????
   if(keycode == XK_Escape)
@@ -71,65 +71,50 @@ void  system_init(t_fractol *fractol)
 void    fractol_init(t_fractol *fractol)
 {
     fractol->x_start = -2.0;
-    fractol->y_start = -2.0;
+    fractol->y_start = 2.0;
     fractol->x_fin = 2.0;
-    fractol->y_fin = 2.0;
-    double	dx = (fractol->x_fin - fractol->x_start)/(WIDTH);
-	  double	dy = (fractol->y_fin - fractol->y_start)/(HEIGHT);
+    fractol->y_fin = -2.0;
 }
 
 void    render_fractol(t_fractol * fractol)
 {
-    fractol->dx = (fractol->x_fin - fractol->x_start)/(WIDTH);
-    fractol->dy = (fractol->y_fin - fractol->y_start)/(HEIGHT);
-
-    for (int i = 0; i < HEIGHT; i++)
-    {
-        for (int j = 0; j < WIDTH; j++)
-        {
-            t_complex c;
-            c.re = fractol->x_start + j * fractol->dx; // current real value
-            c.im = fractol->y_start + i * fractol->dy;   // current imaginary value
-
-            int value = mandelbrot(c, 100);
-            if (value > 90)
-            {
-                my_mlx_pixel_put(fractol, j, i, 0x00FF0000);
-            }
-        }
-    }
-    mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
+  // if(fractol->img)
+  //  fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
+	fractol->dx = (fractol->x_fin - fractol->x_start)/(WIDTH);
+	fractol->dy = (fractol->y_fin - fractol->y_start)/(HEIGHT);
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			t_complex c;
+			c.re = fractol->x_start + j * fractol->dx; // current real value
+			c.im = fractol->y_start + i * fractol->dy;   // current imaginary value
+			int value = mandelbrot(c, 100);
+			if (value > 90)
+				my_mlx_pixel_put(fractol, j, i, 0x00FF0000);
+		}
+	}
+	mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
 }
-
-/*int  update(void *param)
+/*
+void	zoom_in(t_fractol *fractol)
 {
-  t_fractol *fractol = (t_fractol*)param;
+	fractol->x_start += 0.1;
+	fractol->x_fin -= 0.1;
+	fractol->y_start -= 0.1;
+	fractol->y_fin += 0.1;
 
-  static int  frame;
-
-  frame++;
-  if (frame == 2)
-  {
-      fractol->x_start += 1;
-      fractol->x_fin += 1;
-  }
-  else if (frame >= 4)
-  {
-      fractol->x_start +=1;
-      fractol->x_fin += 1;
-      frame = 0;
-  }
-  render_fractol(fractol);
-
-  return (0);
-}*/
-
-int mouse_hook(int mousecode, t_fractol *fractol)
+	// render_fractol(fractol);
+}
+*/
+#include <stdio.h>
+int mouse_hooks(int mousecode, t_fractol *fractol)
 {
-  if (mousecode == 4)
-    puts("scroll up!");
+  /*if (mousecode == 4)
+	  1;// printf("%lf\n", fractol->x_start);
   else if(mousecode == 5)
-    puts("scroll down!");
+    1;// zoom_out(fractol);*/
+  // printf("%lf", fractol->hoge);
 
   // render(); ?
 
@@ -138,29 +123,28 @@ int mouse_hook(int mousecode, t_fractol *fractol)
 
 int main(int argc, char **argv)
 {
-    t_fractol     fractol;
-    
-    // フラクタル図形に関する初期化
-    fractol_init(&fractol);
+    t_fractol	fractol;
 
-    // mlx系に関する初期化
+    int a = 100;
+
+    fractol.hoge = &a;
+    
+    fractol_init(&fractol);
+    printf("%lf\n", fractol.x_start);
     system_init(&fractol);
 
-    //  TODO: 関数に切る
-        mlx_hook(fractol.win, 2, 1L<<0, close, &fractol);
-        mlx_hook(fractol.win, 17, 1L<<2, close_2, &fractol);
-    //
-
-    //  TODO: mouse系のhooksの設定
-        mlx_mouse_hook(fractol.win, mouse_hook, &fractol);
-    //
-
-    // 描画用の処理
     render_fractol(&fractol);
 
-    
-    // mlx_loop_hook(fractol.mlx, *update, &fractol);
-    
+    //  TODO: 関数に切る
+    mlx_hook(fractol.win, 2, 1L<<0, key_hooks, &fractol);
+    mlx_hook(fractol.win, 17, 1L<<2, close_2, &fractol);
+
+    printf("%lf\n", fractol.x_start);
+
+    mlx_mouse_hook(fractol.win, mouse_hooks, &fractol);
+
+    // 描画用の処理
+    // render_fractol(&fractol);
 
     mlx_loop(fractol.mlx);
 }
