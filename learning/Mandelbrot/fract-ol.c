@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:22:14 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/12 22:07:55 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/12 23:03:35 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@
 // using namespace std;
 
 #include <stdio.h>
-int close(int keycode, t_mlx_system *system)
+int close(int keycode, t_fractol *fractol)
 {
   printf("%d\n", keycode); // esc -> 65307 ...????
   if(keycode == XK_Escape)
   {
-    mlx_destroy_window(system->mlx, system->win);
+    mlx_destroy_window(fractol->mlx, fractol->win);
     die("Pressed esc key");
   }
   return (0);
 }
 
-int close_2(t_mlx_system *system)
+int close_2(t_fractol *fractol)
 {
-    mlx_destroy_window(system->mlx, system->win);
+    mlx_destroy_window(fractol->mlx, fractol->win);
     die("Pressed cross button");
     return (0);
 }
@@ -51,20 +51,20 @@ int    mandelbrot(t_complex c, int maxiter)
     return maxiter;
 }
 
-void  my_mlx_pixel_put(t_mlx_system *system, int x, int y, int color)
+void  my_mlx_pixel_put(t_fractol *fractol, int x, int y, int color)
 {
   char  *dst;
 
-  dst = system->addr + (y * system->line_length + x * (system->bits_per_pixel / 8));
+  dst = fractol->addr + (y * fractol->line_length + x * (fractol->bits_per_pixel / 8));
   *(unsigned int*)dst = color;
 }
 
-void  system_init(t_mlx_system *system)
+void  system_init(t_fractol *fractol)
 {
-    system->mlx = mlx_init();
-    system->win = mlx_new_window(system->mlx, WIDTH, HEIGHT, "Hello, World");
-    system->img = mlx_new_image(system->mlx, WIDTH, HEIGHT);
-    system->addr = mlx_get_data_addr(system->img, &system->bits_per_pixel, &system->line_length, &system->endian);
+    fractol->mlx = mlx_init();
+    fractol->win = mlx_new_window(fractol->mlx, WIDTH, HEIGHT, "Hello, World");
+    fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
+    fractol->addr = mlx_get_data_addr(fractol->img, &fractol->bits_per_pixel, &fractol->line_length, &fractol->endian);
 }
 
 
@@ -78,7 +78,7 @@ void    fractol_init(t_fractol *fractol)
 	  double	dy = (fractol->y_fin - fractol->y_start)/(HEIGHT);
 }
 
-void    render_fractol(t_mlx_system *system, t_fractol * fractol)
+void    render_fractol(t_fractol * fractol)
 {
     fractol->dx = (fractol->x_fin - fractol->x_start)/(WIDTH);
     fractol->dy = (fractol->y_fin - fractol->y_start)/(HEIGHT);
@@ -94,11 +94,11 @@ void    render_fractol(t_mlx_system *system, t_fractol * fractol)
             int value = mandelbrot(c, 100);
             if (value > 90)
             {
-                my_mlx_pixel_put(system, j, i, 0x00FF0000);
+                my_mlx_pixel_put(fractol, j, i, 0x00FF0000);
             }
         }
     }
-    mlx_put_image_to_window(system->mlx, system->win, system->img, 0, 0); 
+    mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
 }
 
 /*int  update(void *param)
@@ -124,7 +124,7 @@ void    render_fractol(t_mlx_system *system, t_fractol * fractol)
   return (0);
 }*/
 
-int mouse_hook(int mousecode, t_mlx_system *system)
+int mouse_hook(int mousecode, t_fractol *fractol)
 {
   if (mousecode == 4)
     puts("scroll up!");
@@ -139,29 +139,28 @@ int mouse_hook(int mousecode, t_mlx_system *system)
 int main(int argc, char **argv)
 {
     t_fractol     fractol;
-    t_mlx_system  system;
     
     // フラクタル図形に関する初期化
     fractol_init(&fractol);
 
     // mlx系に関する初期化
-    system_init(&system);
+    system_init(&fractol);
 
     //  TODO: 関数に切る
-        mlx_hook(system.win, 2, 1L<<0, close, &system);
-        mlx_hook(system.win, 17, 1L<<2, close_2, &system);
+        mlx_hook(fractol.win, 2, 1L<<0, close, &fractol);
+        mlx_hook(fractol.win, 17, 1L<<2, close_2, &fractol);
     //
 
     //  TODO: mouse系のhooksの設定
-        mlx_mouse_hook(system.win, mouse_hook, &system);
+        mlx_mouse_hook(fractol.win, mouse_hook, &fractol);
     //
 
     // 描画用の処理
-    render_fractol(&system, &fractol);
+    render_fractol(&fractol);
 
     
     // mlx_loop_hook(fractol.mlx, *update, &fractol);
     
 
-    mlx_loop(system.mlx);
+    mlx_loop(fractol.mlx);
 }

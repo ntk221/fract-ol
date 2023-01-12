@@ -34,9 +34,17 @@ typedef struct s_fractol
 	double	y_fin;
 	double	dx; // x_fin - x_start)/(WIDTH);
 	double	dy; // (y_fin - y_start)/(HEIGHT);
+
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	void		*mlx;
+	void		*win;
 } t_fractol;
 
-typedef struct s_mlx_system
+/*typedef struct s_mlx_system
 {
 	void		*img;
 	char		*addr;
@@ -45,4 +53,4 @@ typedef struct s_mlx_system
 	int			endian;
 	void		*mlx;
 	void		*win;
-} t_mlx_system;
+} t_mlx_system;*/
