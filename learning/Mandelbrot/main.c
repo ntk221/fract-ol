@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:22:14 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/13 10:51:25 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/13 13:08:38 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 int key_hooks(int keycode, t_fractol *fractol)
 {
-	printf("%d\n", keycode);
 	if(keycode == XK_Escape)
 	{
 		mlx_destroy_window(fractol->mlx, fractol->win);
 		die("Pressed esc key");
 	}
+	// if(keycode == )
 	return (0);
 }
 
@@ -60,6 +60,12 @@ void    render_fractol(t_fractol * fractol)
 	mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
 }
 
+int expose_hooks(t_fractol *fractol)
+{
+	mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
+	return (0);
+}
+
 int main(int argc, char **argv)
 {
 	t_fractol	fractol;
@@ -72,6 +78,7 @@ int main(int argc, char **argv)
 	// 関数に切る
 	mlx_hook(fractol.win, 2, 1L<<0, key_hooks, &fractol);
 	mlx_mouse_hook(fractol.win, mouse_hooks, &fractol);
+	mlx_expose_hook(fractol.win, expose_hooks, &fractol);
 	mlx_hook(fractol.win, 17, 1L<<2, finish, &fractol);
 
 	mlx_loop(fractol.mlx);
