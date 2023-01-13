@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:22:14 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/13 00:13:08 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/13 10:37:22 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int key_hooks(int keycode, t_fractol *fractol)
   return (0);
 }
 
-int close_2(t_fractol *fractol)
+int finish(t_fractol *fractol)
 {
     mlx_destroy_window(fractol->mlx, fractol->win);
     die("Pressed cross button");
@@ -101,7 +101,18 @@ void	zoom_in(t_fractol *fractol)
 	fractol->x_fin -= 0.05;
 	fractol->y_start -= 0.05;
 	fractol->y_fin += 0.05;
-  // mlx_clear_window(fractol->mlx, fractol->win);
+  mlx_destroy_image(fractol->mlx, fractol->img);
+  fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
+  fractol->addr = mlx_get_data_addr(fractol->img, &fractol->bits_per_pixel, &fractol->line_length, &fractol->endian);
+	render_fractol(fractol);
+}
+
+void	zoom_out(t_fractol *fractol)
+{
+	fractol->x_start -= 0.05;
+	fractol->x_fin += 0.05;
+	fractol->y_start += 0.05;
+	fractol->y_fin -= 0.05;
   mlx_destroy_image(fractol->mlx, fractol->img);
   fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
   fractol->addr = mlx_get_data_addr(fractol->img, &fractol->bits_per_pixel, &fractol->line_length, &fractol->endian);
@@ -114,7 +125,7 @@ int mouse_hooks(int mousecode, int x, int y, t_fractol *fractol)
   if (mousecode == 4)
     zoom_in(fractol);
   else if(mousecode == 5)
-    1;// zoom_out(fractol);*/
+    zoom_out(fractol);
   // printf("%lf", fractol->hoge);
 
   // render(); ?
@@ -134,9 +145,8 @@ int main(int argc, char **argv)
 
     //  TODO: 関数に切る
     mlx_hook(fractol.win, 2, 1L<<0, key_hooks, &fractol);
-    mlx_hook(fractol.win, 17, 1L<<2, close_2, &fractol);
-
     mlx_mouse_hook(fractol.win, mouse_hooks, &fractol);
+    mlx_hook(fractol.win, 17, 1L<<2, finish, &fractol);
 
     // 描画用の処理
     // render_fractol(&fractol);
