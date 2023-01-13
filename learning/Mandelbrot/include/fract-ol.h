@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include "complex.h"
+#include "utils.h"
 #include <Xlib.h>
 #include <stdlib.h>
 
@@ -54,3 +55,17 @@ typedef struct s_fractol
 	void		*mlx;
 	void		*win;
 } t_mlx_system;*/
+
+int	mandelbrot(t_complex c, int maxiter);
+
+/* initialize function */
+void	system_init(t_fractol *fractol);
+void	fractol_init(t_fractol *fractol);
+
+/* mouse hooks */
+int		mouse_hooks(int mousecode, int x, int y, t_fractol *fractol);
+void	zoom_in(t_fractol *fractol);
+void	zoom_out(t_fractol *fractol);
+
+/* rendering function */
+void	render_fractol(t_fractol * fractol);

@@ -5,12 +5,13 @@ NAME   = Mandelbrot
 MLXDIR = ../../minilibx-linux
 XLIB   = /opt/X11/lib
 XLIBINC = /opt/X11/include/X11
+SRCS = ./*.c
 
 %.o: %.c
 	$(CC) $(FLAGS) -Imlx -c $< -o $@
 
 $(NAME):
-	$(CC)  -L$(MLXDIR) -L$(XLIB) -lXext -lX11 -lmlx -I$(MLXDIR) -I$(XLIBINC) -framework OpenGL -framework AppKit complex.c fract-ol.c utils.c -o $(NAME)
+	$(CC)  -L$(MLXDIR) -L$(XLIB) -lXext -lX11 -lmlx -I$(MLXDIR) -I$(XLIBINC) -framework OpenGL -framework AppKit $(SRCS) -o $(NAME)
 
 fclean:
 	rm $(NAME)
