@@ -14,12 +14,10 @@
 #include "include/utils.h"
 #include <X11/keysym.h>
 
-// using namespace std;
-
 #include <stdio.h>
 int key_hooks(int keycode, t_fractol *fractol)
 {
-  printf("%d\n", keycode); // esc -> 65307 ...????
+  printf("%d\n", keycode);
   if(keycode == XK_Escape)
   {
     mlx_destroy_window(fractol->mlx, fractol->win);
@@ -96,7 +94,7 @@ void    render_fractol(t_fractol * fractol)
 	}
 	mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
 }
-/*
+
 void	zoom_in(t_fractol *fractol)
 {
 	fractol->x_start += 0.1;
@@ -104,14 +102,14 @@ void	zoom_in(t_fractol *fractol)
 	fractol->y_start -= 0.1;
 	fractol->y_fin += 0.1;
 
-	// render_fractol(fractol);
+	render_fractol(fractol);
 }
-*/
+
 #include <stdio.h>
-int mouse_hooks(int mousecode, t_fractol *fractol)
+int mouse_hooks(int mousecode, int x, int y, t_fractol *fractol)
 {
-  /*if (mousecode == 4)
-	  1;// printf("%lf\n", fractol->x_start);
+  if (mousecode == 4)
+    zoom_in(fractol);
   else if(mousecode == 5)
     1;// zoom_out(fractol);*/
   // printf("%lf", fractol->hoge);
@@ -124,10 +122,6 @@ int mouse_hooks(int mousecode, t_fractol *fractol)
 int main(int argc, char **argv)
 {
     t_fractol	fractol;
-
-    int a = 100;
-
-    fractol.hoge = &a;
     
     fractol_init(&fractol);
     printf("%lf\n", fractol.x_start);
@@ -138,8 +132,6 @@ int main(int argc, char **argv)
     //  TODO: 関数に切る
     mlx_hook(fractol.win, 2, 1L<<0, key_hooks, &fractol);
     mlx_hook(fractol.win, 17, 1L<<2, close_2, &fractol);
-
-    printf("%lf\n", fractol.x_start);
 
     mlx_mouse_hook(fractol.win, mouse_hooks, &fractol);
 
