@@ -29,8 +29,9 @@ typedef struct s_fractol
 	void		*win;
 } t_fractol;
 
-
+/* calculate fractol set */
 int	mandelbrot(t_complex c, int maxiter);
+int	julia(t_complex z, t_complex c, int maxiter);
 
 /* initialize function */
 void	system_init(t_fractol *fractol);
@@ -42,4 +43,5 @@ void	zoom_in(t_fractol *fractol);
 void	zoom_out(t_fractol *fractol);
 
 /* rendering function */
-void	render_fractol(t_fractol * fractol);
+void	render_mandelbrot(t_fractol * fractol);
+void	render_julia(t_fractol * fractol);

@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:41:10 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/13 10:56:20 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/13 15:02:55 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	zoom_in(t_fractol *fractol)
 	mlx_destroy_image(fractol->mlx, fractol->img);
 	fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
 	fractol->addr = mlx_get_data_addr(fractol->img, &fractol->bits_per_pixel, &fractol->line_length, &fractol->endian);
-	render_fractol(fractol);
+	render_julia(fractol);
 }
 
 void	zoom_out(t_fractol *fractol)
@@ -34,7 +34,7 @@ void	zoom_out(t_fractol *fractol)
 	mlx_destroy_image(fractol->mlx, fractol->img);
 	fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
 	fractol->addr = mlx_get_data_addr(fractol->img, &fractol->bits_per_pixel, &fractol->line_length, &fractol->endian);
-	render_fractol(fractol);
+	render_julia(fractol);
 }
 
 int mouse_hooks(int mousecode, int x, int y, t_fractol *fractol)
