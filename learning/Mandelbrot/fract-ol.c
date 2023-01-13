@@ -97,11 +97,14 @@ void    render_fractol(t_fractol * fractol)
 
 void	zoom_in(t_fractol *fractol)
 {
-	fractol->x_start += 0.1;
-	fractol->x_fin -= 0.1;
-	fractol->y_start -= 0.1;
-	fractol->y_fin += 0.1;
-
+	fractol->x_start += 0.05;
+	fractol->x_fin -= 0.05;
+	fractol->y_start -= 0.05;
+	fractol->y_fin += 0.05;
+  // mlx_clear_window(fractol->mlx, fractol->win);
+  mlx_destroy_image(fractol->mlx, fractol->img);
+  fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
+  fractol->addr = mlx_get_data_addr(fractol->img, &fractol->bits_per_pixel, &fractol->line_length, &fractol->endian);
 	render_fractol(fractol);
 }
 
