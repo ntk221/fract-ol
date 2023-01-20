@@ -47,7 +47,7 @@ void	render_mandelbrot(t_fractol * fractol)
 		for (int j = 0; j < WIDTH; j++)
 		{
 			t_complex c;
-			c.re = fractol->x_start + j * fractol->dx; // current real value
+			c.re = fractol->x_start + j * fractol->dx;   // current real value
 			c.im = fractol->y_start + i * fractol->dy;   // current imaginary value
 			int	MAXITER = 100;
 			int value = mandelbrot(c, MAXITER);

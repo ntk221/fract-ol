@@ -1,7 +1,7 @@
 CC 	   = gcc 
 FLAGS  = -Wall -Werror -Wextra
 
-NAME   = Mandelbrot
+NAME   = fract-ol
 MLXDIR = ../../minilibx-linux
 XLIB   = /opt/X11/lib
 XLIBINC = /opt/X11/include/X11
@@ -16,12 +16,12 @@ $(OBJS): $(SRCS)
 	$(CC) $(FLAGS) -I$(MLXDIR) -I$(XLIBINC) $(SRCS) -c
 
 fclean: clean
-	rm $(NAME)
+	- rm $(NAME)
 
 re: fclean $(NAME)
 
 clean:
-	rm $(OBJS)
+	- rm $(OBJS)
 
 test:
 	gcc test_complex.c complex.c -o complex_test
