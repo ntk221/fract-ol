@@ -4,7 +4,7 @@ FLAGS  = -Wall -Werror -Wextra
 NAME   = Mandelbrot
 MLXDIR = ../../minilibx-linux
 XLIB   = /opt/X11/lib
-XLIBINC = /opt/X11/include/X11
+XLIBINC = /opt/X11/include/X11/
 SRCS = ./*.c
 
 %.o: %.c

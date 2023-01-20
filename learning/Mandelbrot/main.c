@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:22:14 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/13 15:02:27 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/20 20:24:35 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int key_hooks(int keycode, t_fractol *fractol)
 		mlx_destroy_window(fractol->mlx, fractol->win);
 		die("Pressed esc key");
 	}
-	// if(keycode == )
 	return (0);
 }
 
@@ -31,7 +30,7 @@ int finish(t_fractol *fractol)
 	return (0);
 }
 
-void  my_mlx_pixel_put(t_fractol *fractol, int x, int y, int color)
+void	my_mlx_pixel_put(t_fractol *fractol, int x, int y, int color)
 {
 	char	*dst;
 
@@ -39,10 +38,8 @@ void  my_mlx_pixel_put(t_fractol *fractol, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void    render_mandelbrot(t_fractol * fractol)
+void	render_mandelbrot(t_fractol * fractol)
 {
-  // if(fractol->img)
-  //  fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
 	fractol->dx = (fractol->x_fin - fractol->x_start)/(WIDTH);
 	fractol->dy = (fractol->y_fin - fractol->y_start)/(HEIGHT);
 	for (int i = 0; i < HEIGHT; i++)
@@ -52,9 +49,20 @@ void    render_mandelbrot(t_fractol * fractol)
 			t_complex c;
 			c.re = fractol->x_start + j * fractol->dx; // current real value
 			c.im = fractol->y_start + i * fractol->dy;   // current imaginary value
-			int value = mandelbrot(c, 100);
+			int	MAXITER = 100;
+			int value = mandelbrot(c, MAXITER);
 			if (value > 90)
-				my_mlx_pixel_put(fractol, j, i, 0x00FF0000);
+				my_mlx_pixel_put(fractol, j, i, 0xE00000);	
+			else if (value > 70)
+				my_mlx_pixel_put(fractol, j, i, 0x0E0000);
+			else if (value > 50)
+				my_mlx_pixel_put(fractol, j, i, 0xAA0000);
+			else if (value > 30)
+				my_mlx_pixel_put(fractol, j, i, 0x6E0000);
+			else if (value > 10)
+				my_mlx_pixel_put(fractol, j, i, 0x550000);
+			else if (value > 5)
+				my_mlx_pixel_put(fractol, j, i, 0x4A0000);
 		}
 	}
 	mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
@@ -62,10 +70,8 @@ void    render_mandelbrot(t_fractol * fractol)
 
 
 
-void    render_julia(t_fractol * fractol)
+void	render_julia(t_fractol * fractol)
 {
-  // if(fractol->img)
-  //  fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
 	t_complex c;
 	t_complex z;
 
@@ -82,7 +88,17 @@ void    render_julia(t_fractol * fractol)
 			z.im = fractol->y_start + i * fractol->dy;   // current imaginary value
 			int value = julia(z, c, 100);
 			if (value > 90)
-				my_mlx_pixel_put(fractol, j, i, 0x00FF0000);
+				my_mlx_pixel_put(fractol, j, i, 0xE00000);	
+			else if (value > 70)
+				my_mlx_pixel_put(fractol, j, i, 0x0E0000);
+			else if (value > 50)
+				my_mlx_pixel_put(fractol, j, i, 0xAA0000);
+			else if (value > 30)
+				my_mlx_pixel_put(fractol, j, i, 0x6E0000);
+			else if (value > 10)
+				my_mlx_pixel_put(fractol, j, i, 0x550000);
+			else if (value > 5)
+				my_mlx_pixel_put(fractol, j, i, 0x4A0000);
 		}
 	}
 	mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
@@ -99,10 +115,8 @@ int main(int argc, char **argv)
 	t_fractol	fractol;
 	
 	fractol_init(&fractol);
-	printf("%lf\n", fractol.x_start);
 	system_init(&fractol);
-	// render_mandelbrot(&fractol);
-	render_julia(&fractol);
+	render_mandelbrot(&fractol);
 
 	// 関数に切る
 	mlx_hook(fractol.win, 2, 1L<<0, key_hooks, &fractol);
