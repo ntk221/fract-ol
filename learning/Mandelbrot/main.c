@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:22:14 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/20 20:24:35 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/20 22:24:22 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ void	render_julia(t_fractol * fractol)
 	mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
 }
 
+void	render_fractol(t_fractol *fractol);
+
 int expose_hooks(t_fractol *fractol)
 {
 	mlx_put_image_to_window(fractol->mlx, fractol->win, fractol->img, 0, 0); 
@@ -115,15 +117,15 @@ int expose_hooks(t_fractol *fractol)
 int main(int argc, char **argv)
 {
   if (argc < 2)
-    puts("Todo: Usage!");
-  else if (strcmp(argv[1], "mandelbrot") != 0 && strcmp(argv[1],"julia") != 0)
+    die("Todo: Usage!");
+  else if (strncmp(argv[1], "mandelbrot", 10) != 0 && strncmp(argv[1],"julia", 5) != 0)
     puts("Todo: Usage2!");
 
 	t_fractol	fractol;
-	
+	fractol.name = argv[1];	
 	fractol_init(&fractol);
 	system_init(&fractol);
-	render_mandelbrot(&fractol);
+	render_fractol(&fractol);
 
 	// 関数に切る
 	mlx_hook(fractol.win, 2, 1L<<0, key_hooks, &fractol);
@@ -132,4 +134,12 @@ int main(int argc, char **argv)
 	mlx_hook(fractol.win, 17, 1L<<2, finish, &fractol);
 
 	mlx_loop(fractol.mlx);
+}
+
+void	render_fractol(t_fractol *fractol)
+{
+	if (strncmp(fractol->name, "mandelbrot", 10) == 0)
+		render_mandelbrot(fractol);
+	else if (strncmp(fractol->name, "julia", 5) == 0)
+		render_julia(fractol);
 }

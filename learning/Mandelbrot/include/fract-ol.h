@@ -13,12 +13,13 @@
 
 typedef struct s_fractol
 {
-	double	x_start;
-	double	x_fin;
-	double	y_start;
-	double	y_fin;
-	double	dx; // x_fin - x_start)/(WIDTH);
-	double	dy; // (y_fin - y_start)/(HEIGHT);
+	char		*name;
+	double		x_start;
+	double		x_fin;
+	double		y_start;
+	double		y_fin;
+	double		dx; 
+	double		dy; 
 
 	void		*img;
 	char		*addr;
@@ -43,5 +44,6 @@ void	zoom_in(t_fractol *fractol);
 void	zoom_out(t_fractol *fractol);
 
 /* rendering function */
+void	render_fractol(t_fractol *fractol);
 void	render_mandelbrot(t_fractol * fractol);
 void	render_julia(t_fractol * fractol);
