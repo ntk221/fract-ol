@@ -110,8 +110,11 @@ int expose_hooks(t_fractol *fractol)
 	return (0);
 }
 
+#include <stdio.h>
 int main(int argc, char **argv)
 {
+  if (argc < 2)
+    puts("Todo: Usage!");
 	t_fractol	fractol;
 	
 	fractol_init(&fractol);
