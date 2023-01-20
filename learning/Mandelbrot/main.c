@@ -111,10 +111,14 @@ int expose_hooks(t_fractol *fractol)
 }
 
 #include <stdio.h>
+#include <string.h>
 int main(int argc, char **argv)
 {
   if (argc < 2)
     puts("Todo: Usage!");
+  else if (strcmp(argv[1], "mandelbrot") != 0 && strcmp(argv[1],"julia") != 0)
+    puts("Todo: Usage2!");
+
 	t_fractol	fractol;
 	
 	fractol_init(&fractol);
