@@ -6,11 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:22:14 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/22 03:29:40 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/22 03:47:45 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/fract-ol.h"
+#include "include/fractol.h"
 #include "include/libft.h"
 
 /*__attribute__((destructor))

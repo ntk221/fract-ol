@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/fract-ol.h"
+#include "include/fractol.h"
 #include <X11/keysym.h>
 
 void	system_init(t_fractol *f)

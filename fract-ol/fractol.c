@@ -6,11 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:51:01 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/21 22:47:11 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/22 03:47:49 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/fract-ol.h"
+#include "include/fractol.h"
 
 int	mandelbrot(t_complex c, int maxiter)
 {

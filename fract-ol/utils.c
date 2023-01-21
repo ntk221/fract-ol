@@ -6,11 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 23:03:32 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/22 03:24:36 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/22 03:48:07 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/fract-ol.h"
+#include "include/fractol.h"
 #include "include/libft.h"
 
 void	die(char *s)

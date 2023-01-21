@@ -6,11 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:41:10 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/21 23:03:00 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/22 03:48:02 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/fract-ol.h"
+#include "./include/fractol.h"
 #include <X11/keysym.h>
 
 void	zoom_in(t_fractol *f)

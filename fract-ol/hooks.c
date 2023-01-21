@@ -6,11 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 03:46:39 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/22 03:46:40 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/22 03:47:43 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/fract-ol.h"
+#include "include/fractol.h"
 #include <X11/keysym.h>
 
 int	expose_hooks(t_fractol *fractol)

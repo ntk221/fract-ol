@@ -6,11 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 03:28:35 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/22 03:28:48 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/22 03:47:58 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/fract-ol.h"
+#include "include/fractol.h"
 #include "include/libft.h"
 
 void	put_function(int value, t_fractol *fractol, int i, int j)
