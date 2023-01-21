@@ -6,44 +6,44 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:41:10 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/20 22:25:56 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/21 23:03:00 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/fract-ol.h"
 #include <X11/keysym.h>
 
-void	zoom_in(t_fractol *fractol)
+void	zoom_in(t_fractol *f)
 {
-	fractol->x_start += 0.05;
-	fractol->x_fin -= 0.05;
-	fractol->y_start -= 0.05;
-	fractol->y_fin += 0.05;
-	mlx_destroy_image(fractol->mlx, fractol->img);
-	fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
-	fractol->addr = mlx_get_data_addr(fractol->img, &fractol->bits_per_pixel, &fractol->line_length, &fractol->endian);
-	render_fractol(fractol);
+	f->x_start += 0.05;
+	f->x_fin -= 0.05;
+	f->y_start -= 0.05;
+	f->y_fin += 0.05;
+	mlx_destroy_image(f->mlx, f->img);
+	f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
+	f->addr = mlx_get_data_addr(f->img, &f->bits, &f->line_length, &f->endian);
+	render_fractol(f);
 }
 
-void	zoom_out(t_fractol *fractol)
+void	zoom_out(t_fractol *f)
 {
-	fractol->x_start -= 0.05;
-	fractol->x_fin += 0.05;
-	fractol->y_start += 0.05;
-	fractol->y_fin -= 0.05;
-	mlx_destroy_image(fractol->mlx, fractol->img);
-	fractol->img = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
-	fractol->addr = mlx_get_data_addr(fractol->img, &fractol->bits_per_pixel, &fractol->line_length, &fractol->endian);
-	render_fractol(fractol);
+	f->x_start -= 0.05;
+	f->x_fin += 0.05;
+	f->y_start += 0.05;
+	f->y_fin -= 0.05;
+	mlx_destroy_image(f->mlx, f->img);
+	f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
+	f->addr = mlx_get_data_addr(f->img, &f->bits, &f->line_length, &f->endian);
+	render_fractol(f);
 }
 
-int mouse_hooks(int mousecode, int x, int y, t_fractol *fractol)
+int	mouse_hooks(int mousecode, int x, int y, t_fractol *fractol)
 {
-  x = x;
-  y = y;
+	x = x;
+	y = y;
 	if (mousecode == 4)
-	  zoom_in(fractol);
-	else if(mousecode == 5)
-	  zoom_out(fractol);
-	return 0;
+		zoom_in(fractol);
+	else if (mousecode == 5)
+		zoom_out(fractol);
+	return (0);
 }

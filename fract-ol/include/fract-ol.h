@@ -8,8 +8,8 @@
 #include <Xlib.h>
 #include <stdlib.h>
 
-#define WIDTH 	640
-#define HEIGHT 	640
+#define WIDTH	640
+#define HEIGHT	640
 
 typedef struct s_fractol
 {
@@ -24,7 +24,7 @@ typedef struct s_fractol
 
 	void		*img;
 	char		*addr;
-	int			bits_per_pixel;
+	int			bits;
 	int			line_length;
 	int			endian;
 	void		*mlx;
@@ -51,3 +51,7 @@ void	render_julia(t_fractol * fractol);
 
 /* util function */
 t_complex set_arg(int arg_num);
+void      print_usage(void);
+void      handle_args(int argc, char **argv, t_fractol *fractol);
+
+
