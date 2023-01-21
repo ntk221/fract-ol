@@ -1,15 +1,16 @@
-CC 	   = gcc 
+CC		= gcc 
 CFLAGS  = -Wall -Werror -Wextra
 
-NAME   = fract-ol
-MLXDIR = ../minilibx-linux
-XLIB   = /opt/X11/lib
+NAME	= fract-ol
+MLXDIR	= ../minilibx-linux
+XLIB	= /opt/X11/lib
 XLIBINC = /opt/X11/include/X11
-SRCS = main.c utils.c mouse_hooks.c init.c complex.c fractol.c set_arg.c
-OBJS = $(SRCS:%c=%o)
-RM   = rm -f
+SRCS	= main.c utils.c mouse_hooks.c init.c complex.c fractol.c set_arg.c draw.c hooks.c
+OBJS	= $(SRCS:%c=%o)
+RM		= rm -f
 LIBFTDIR = libft
 
+.PHONY: fclean re clean
 
 $(NAME): $(OBJS)
 	- make -C $(LIBFTDIR)
