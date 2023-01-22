@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:41:10 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/22 03:48:02 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/22 17:58:37 by knitta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	zoom_out(t_fractol *f)
 
 int	mouse_hooks(int mousecode, int x, int y, t_fractol *fractol)
 {
-	x = x;
-	y = y;
+	x = x + 0;
+	y = y + 0;
 	if (mousecode == 4)
 		zoom_in(fractol);
 	else if (mousecode == 5)

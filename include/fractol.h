@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 03:30:15 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/22 15:49:15 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/22 17:52:47 by knitta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ t_complex	set_arg(double c_re, double c_im);
 void		print_usage(void);
 void		handle_args(int argc, char **argv, t_fractol *fractol);
 void		die(char *s);
-double  ft_atof(char *str);
+double		ft_atof(char *str);
 
 #endif

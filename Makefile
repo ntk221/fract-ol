@@ -13,7 +13,8 @@ LIBFLAGS	= -lmlx_Darwin -framework OpenGL -framework AppKit -lXext -lX11 -lm
 
 ifeq ($(shell uname), Darwin)
 MLX = $(MLXDIR)/libmlx_Darwin.a
-XLIBDIR		= /opt/X11/lib
+XLIBDIR		= /usr/X11R6/lib
+XLIBINC		= /usr/X11/include
 LIBFLAGS	= -lmlx_Darwin -framework OpenGL -framework AppKit -lXext -lX11 -lm
 else
 XLIBDIR		= /usr/lib
@@ -29,7 +30,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFTDIR) -L$(MLXDIR) -L$(XLIBDIR) -I$(MLXDIR) $(LIBFLAGS) -lft
 
 $(OBJS): $(SRCS)
-	$(CC) $(CFLAGS) -I$(MLXDIR) $? -c 
+	$(CC) $(CFLAGS) -I$(MLXDIR) -I$(XLIBINC) $? -c 
 	@touch $(OBJS)
 
 fclean: clean
