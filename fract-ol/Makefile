@@ -10,7 +10,9 @@ OBJS	= $(SRCS:%c=%o)
 RM		= rm -f
 LIBFTDIR = libft
 
-.PHONY: fclean re clean
+.PHONY: fclean re clean all
+
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	- make -C $(LIBFTDIR)
