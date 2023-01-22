@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:22:14 by kazuki            #+#    #+#             */
-/*   Updated: 2023/01/22 03:47:45 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/01/22 16:40:54 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@ static void destructor() {
 int		finish(t_fractol *fractol);
 void	set_hooks(t_fractol *fractol);
 void	handle_args(int argc, char **argv, t_fractol *fractol);
+
+/*
+		c.re = -0.8;
+		c.im = 0.15;
+
+		c.re = -0.7;
+		c.im = 0.3;
+
+		c.re = -0.35;
+		c.im = 0.65;
+*/
 
 int	main(int argc, char **argv)
 {
@@ -49,12 +60,12 @@ void	handle_args(int argc, char **argv, t_fractol *fractol)
 	}
 	if (ft_strcmp(argv[1], "j") == 0)
 	{
-		if (argc < 3)
+		if (argc < 4)
 		{
 			print_usage();
-			die("Error: invalid number of julia sets you can select");
+			die("Error: invalid parameters");
 		}
-		fractol->arg = set_arg(ft_atoi(argv[2]));
+		fractol->arg = set_arg(ft_atof(argv[2]), ft_atof(argv[3]));
 	}
 }
 
