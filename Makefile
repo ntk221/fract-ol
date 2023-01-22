@@ -26,7 +26,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	- make -C $(LIBFTDIR)
-	$(CC) $(CFLAGS) -L$(LIBFTDIR) -L$(MLXDIR) -L$(XLIBDIR) -I$(MLXDIR) $(LIBFLAGS) $(OBJS) -o $(NAME) -lft
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFTDIR) -L$(MLXDIR) -L$(XLIBDIR) -I$(MLXDIR) $(LIBFLAGS) -lft
 
 $(OBJS): $(SRCS)
 	$(CC) $(CFLAGS) -I$(MLXDIR) $? -c 
